@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dots_height">30dp</dimen>
+    <dimen name="dots_margin_bottom">60dp</dimen>
+    <dimen name="title_intro_text_size">26sp</dimen>
+    <dimen name="intro_slide_padding_bottom">120dp</dimen>
+    <dimen name="slide_desc">16sp</dimen>
+    <dimen name="desc_padding">40dp</dimen>
+</resources>

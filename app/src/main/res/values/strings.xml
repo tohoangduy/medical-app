@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Medical App</string>
+    <string name="skip">skip</string>
+    <string name="get_started">Get started</string>
+    <string name="intro_title_1">Intro 1</string>
+    <string name="intro_title_2">Intro 2</string>
+    <string name="intro_title_3">Intro 3</string>
+    <string name="add_medication">Add Medication</string>
+    <string name="summary">Summary</string>
+    <string name="slide_desc1">Intro 1 - Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</string>
+    <string name="slide_desc2">Intro 2 - Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</string>
+    <string name="slide_desc3">Intro 3 - Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</string>
+</resources>

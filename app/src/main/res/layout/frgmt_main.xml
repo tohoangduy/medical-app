@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="#AFDEF5"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_person_24dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/circle_rounded" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/tvFullname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="William"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/tvYearOld"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30 years old"/>
+            <TextView
+                android:id="@+id/tvBloodType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Blood type: O+"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F3F3F3"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            style="@style/CircleButton"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <View
+                android:id="@+id/btnAddMedication"
+                style="@style/CircleButton.View"
+                android:background="@drawable/ic_transform"
+                />
+
+            <TextView
+                style="@style/CircleButton.TextView"
+                android:text="@string/add_medication"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/CircleButton"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <View
+                android:id="@+id/btnAddSymptoms"
+                style="@style/CircleButton.View"
+                android:background="@drawable/ic_transform"
+                />
+
+            <TextView
+                style="@style/CircleButton.TextView"
+                android:text="Add Symptoms"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/CircleButton"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <View
+                android:id="@+id/btnSummary"
+                style="@style/CircleButton.View"
+                android:background="@drawable/ic_transform"
+                />
+
+            <TextView
+                style="@style/CircleButton.TextView"
+                android:text="@string/summary"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:text="You have not added any medication." />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Have you taken medication? 20/11/2019"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcMedication"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:scrollbars="none">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>
