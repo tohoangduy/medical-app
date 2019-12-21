@@ -17,10 +17,10 @@ public interface SymptomDao {
     LiveData<List<Symptom>> getListSymptoms();
 
     @Insert
-    void insertSymptom(Symptom symptom);
+    Long insertSymptom(Symptom symptom);
 
     @Query("SELECT * FROM Symptom WHERE id = :id")
-    LiveData<Symptom> getSymptomById(String id);
+    LiveData<Symptom> getSymptomById(Long id);
 
     @Delete
     void deleteSymptom(Symptom symptom);

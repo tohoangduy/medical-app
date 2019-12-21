@@ -3,20 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/padding_layout_lr"
+    android:paddingRight="@dimen/padding_layout_lr"
+    android:paddingTop="@dimen/padding_layout_top"
+    android:gravity="center_horizontal">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#AFDEF5"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="start"
+            app:srcCompat="@drawable/ic_calendar" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="Date of doctor's visit" />
+    </FrameLayout>
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolBar"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:background="#8CADC4"
-            />
-    </com.google.android.material.appbar.AppBarLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        style="@style/Widget.Design.FloatingActionButton"
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_add_24px" />
 </LinearLayout>

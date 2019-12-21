@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.android.hoangduy.medical.R;
 import com.android.hoangduy.medical.base.BaseFragment;
@@ -14,6 +15,24 @@ import com.android.hoangduy.medical.base.BaseFragment;
 public class MainFrgmt extends BaseFragment implements View.OnClickListener {
     public static MainFrgmt newInstance() {
         return new MainFrgmt();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setShowToolBar(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setShowToolBar(false);
+    }
+
+    @Override
+    public void onPause() {
+        setShowToolBar(true);
+        super.onPause();
     }
 
     @Nullable
@@ -50,5 +69,16 @@ public class MainFrgmt extends BaseFragment implements View.OnClickListener {
                 goNext(SummaryFrgmt.newInstance());
                 break;
         }
+    }
+
+    @Override
+    protected boolean onBackPressed() {
+        new AlertDialog.Builder(getContext())
+                .setMessage(getString(R.string.exit_app_msg))
+                .setPositiveButton(getString(R.string.yes), (dialog, which) -> getActivity().finish())
+                .setNegativeButton(getString(R.string.no), null)
+                .show();
+
+        return true;
     }
 }

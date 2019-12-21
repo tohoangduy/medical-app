@@ -1,15 +1,19 @@
 package com.android.hoangduy.medical.base;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.android.hoangduy.medical.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+    private Toolbar toolbar;
 
     protected abstract Fragment getFirstFragment();
 
@@ -28,6 +32,25 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .replace(getFragmentContainerId(), fragment, fragment.getClass().getSimpleName())
                 .addToBackStack(fragment.getClass().getSimpleName())
                 .commit();
+
+        initToolbar();
+    }
+
+    protected void initToolbar() {
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
+    protected void setShowToolBar(boolean isShow) {
+        toolbar.setVisibility(isShow ? View.VISIBLE : View.GONE);
+    }
+
+    protected void setTitle(String title) {
+        toolbar.setTitle(title);
+    }
+
+    protected void setDisplayHomeAsUpEnabled(boolean isDisplay) {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(isDisplay);
     }
 
     public void goNext(Fragment fragment) {

@@ -7,6 +7,7 @@ import androidx.room.Room;
 
 import com.android.hoangduy.medical.model.dao.MedicationDao;
 import com.android.hoangduy.medical.model.dao.SymptomDao;
+import com.android.hoangduy.medical.model.dao.SymptomTrackingDao;
 import com.android.hoangduy.medical.persistence.MedicalDB;
 import com.android.hoangduy.medical.persistence.MedicalRepository;
 import com.android.hoangduy.medical.viewmodel.CustomViewModelFactory;
@@ -26,30 +27,24 @@ public class RoomModule {
                 application,
                 MedicalDB.class,
                 "Medical.db"
-        ).build();
+        )
+                .fallbackToDestructiveMigration()
+                .build();
     }
 
     @Provides
     @Singleton
-    MedicalRepository providePatientTrackingRepository(MedicationDao medicationDao, SymptomDao symptomDao) {
-        return new MedicalRepository(medicationDao, symptomDao);
+    MedicalRepository provideMedicalRepository(
+            MedicationDao medicationDao,
+            SymptomDao symptomDao,
+            SymptomTrackingDao symptomTrackingDao
+    ) {
+        return new MedicalRepository(medicationDao, symptomDao, symptomTrackingDao);
     }
 
     @Provides
     @Singleton
-    MedicationDao provideMedicationDao(MedicalDB database) {
-        return database.medicationDao();
-    }
-
-    @Provides
-    @Singleton
-    SymptomDao provideSymptomDao(MedicalDB database) {
-        return database.symptomDao();
-    }
-
-    @Provides
-    @Singleton
-    MedicalDB provideListItemDatabase(Application application) {
+    MedicalDB getDatabase(Application application) {
         return database;
     }
 
@@ -57,5 +52,24 @@ public class RoomModule {
     @Singleton
     ViewModelProvider.Factory provideViewModelFactory(MedicalRepository repository) {
         return new CustomViewModelFactory(repository);
+    }
+
+
+    @Provides
+    @Singleton
+    MedicationDao provideMedicationDao(MedicalDB database) {
+        return database.getMedicationDao();
+    }
+
+    @Provides
+    @Singleton
+    SymptomDao provideSymptomDao(MedicalDB database) {
+        return database.getSymptomDao();
+    }
+
+    @Provides
+    @Singleton
+    SymptomTrackingDao provideSymptomTrackingDao(MedicalDB database) {
+        return database.getSymptomTrackingDao();
     }
 }

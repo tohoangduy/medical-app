@@ -22,6 +22,7 @@ public class SummaryFrgmt extends BaseFragment {
         if (contentView != null) return contentView;
         contentView = inflater.inflate(R.layout.frgmt_summary, container, false);
 
+        setTitle("Summary");
         return contentView;
     }
 }

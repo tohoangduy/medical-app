@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class SymptomTracking {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
     private long id;
     @ForeignKey(entity = Symptom.class, parentColumns = "id", childColumns = "symptomId")
@@ -15,8 +15,7 @@ public class SymptomTracking {
     private String level;
     private long atDate;
 
-    public SymptomTracking(long id, long symptomId, String level, long atDate) {
-        this.id = id;
+    public SymptomTracking(long symptomId, String level, long atDate) {
         this.symptomId = symptomId;
         this.level = level;
         this.atDate = atDate;

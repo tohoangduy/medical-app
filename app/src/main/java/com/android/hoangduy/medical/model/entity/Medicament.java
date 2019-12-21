@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(indices = {@Index(value = "name", unique = true)})
 public class Medicament {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
     private long id;
     private String name;

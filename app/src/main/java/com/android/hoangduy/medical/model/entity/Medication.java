@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Medication {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
     private long id;
     @ForeignKey(entity = Medicament.class, parentColumns = "id", childColumns = "id")

@@ -7,13 +7,12 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Symptom {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
     private long id;
     private String name;
 
-    public Symptom(@NonNull long id, String name) {
-        this.id = id;
+    public Symptom(String name) {
         this.name = name;
     }
 

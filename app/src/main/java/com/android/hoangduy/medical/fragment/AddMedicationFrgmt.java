@@ -22,6 +22,7 @@ public class AddMedicationFrgmt extends BaseFragment {
         if (contentView != null) return contentView;
         contentView = inflater.inflate(R.layout.frgmt_add_medication, container, false);
 
+        setTitle(getString(R.string.add_prescribed_medication));
         return contentView;
     }
 }

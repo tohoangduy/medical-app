@@ -10,4 +10,13 @@
     <string name="slide_desc1">Intro 1 - Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</string>
     <string name="slide_desc2">Intro 2 - Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</string>
     <string name="slide_desc3">Intro 3 - Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</string>
+    <string name="input_new_symptom">Input new symptom</string>
+    <string name="mild">Mild</string>
+    <string name="moderate">Moderate</string>
+    <string name="severe">Severe</string>
+    <string name="other_symptoms">Other symptoms</string>
+    <string name="exit_app_msg">Do you want to exit application?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="add_prescribed_medication">Add Prescribed Medication</string>
 </resources>
