@@ -17,35 +17,79 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="Theme.Shrine" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#ffffff</item>
-        <item name="colorPrimaryDark">#e0e0e0</item>
-        <item name="colorAccent">#607d8b</item>
-        <item name="toolbarStyle">@style/Widget.Shrine.Toolbar</item>
+    <style name="Theme.MedicalApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:actionBarStyle">@style/MedicalAppActionBarStyle</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar</item>
+        <item name="alertDialogTheme">@style/Theme.Custom.Material.Alert.Dialog.Light</item>
+        <item name="materialAlertDialogTheme">@style/Theme.Custom.Material.Alert.Dialog.Light</item>
     </style>
 
-    <style name="Widget.Shrine.Toolbar" parent="Widget.AppCompat.Toolbar">
+    <style name="DatePickerTheme.ButtonBarNegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@android:color/holo_red_light</item>
+    </style>
+
+    <style name="Theme.Custom.Material.Alert.Dialog.Light" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/NeutralButtonStyle</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">#009688</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">#009688</item>
+    </style>
+
+    <style name="NeutralButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">#009688</item>
+    </style>
+
+<!--    <style name="Theme.MedicalApp" parent="Base.MaterialThemeBuilder"></style>-->
+
+<!--    <style name="Base.MaterialThemeBuilder" parent="Theme.MaterialComponents.Light.NoActionBar">-->
+<!--        <item name="alphaEmphasisHigh">@dimen/alpha_emphasis_high</item>-->
+<!--        <item name="alphaEmphasisMedium">@dimen/alpha_emphasis_medium</item>-->
+<!--        <item name="alphaEmphasisDisabled">@dimen/alpha_emphasis_disabled</item>-->
+
+<!--        <item name="android:statusBarColor" tools:ignore="NewApi">?colorSurface</item>-->
+<!--        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>-->
+<!--        <item name="android:navigationBarColor" tools:ignore="NewApi">?android:colorBackground</item>-->
+<!--        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>-->
+<!--        <item name="android:navigationBarDividerColor" tools:ignore="NewApi">?colorControlHighlight</item>-->
+
+<!--        &lt;!&ndash;Remap legacy AppCompat attributes to MaterialComponent attributes&ndash;&gt;-->
+<!--        <item name="colorPrimaryDark">?colorPrimaryVariant</item>-->
+<!--        <item name="colorAccent">?colorSecondary</item>-->
+<!--    </style>-->
+
+    <style name="Widget.MedicalApp.Toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="contentInsetStart">12dp</item>
-        <item name="titleTextAppearance">@style/TextAppearance.Shrine.Logo</item>
+        <item name="titleTextAppearance">@style/TextAppearance.MedicalApp.Logo</item>
     </style>
 
-    <style name="Widget.Shrine.CollapsingToolbar" parent="">
-        <item name="collapsedTitleTextAppearance">@style/TextAppearance.Shrine.Logo</item>
+    <style name="Widget.MedicalApp.CollapsingToolbar" parent="">
+        <item name="collapsedTitleTextAppearance">@style/TextAppearance.MedicalApp.Logo</item>
         <item name="contentScrim">?attr/colorPrimary</item>
         <item name="expandedTitleGravity">top</item>
         <item name="expandedTitleMarginStart">124dp</item>
         <item name="expandedTitleMarginTop">140dp</item>
-        <item name="expandedTitleTextAppearance">@style/TextAppearance.Shrine.Logo</item>
+        <item name="expandedTitleTextAppearance">@style/TextAppearance.MedicalApp.Logo</item>
         <item name="scrimVisibleHeightTrigger">140dp</item>
     </style>
 
-    <style name="Widget.Shrine.CollapsingToolbarImage" parent="">
+    <style name="Widget.MedicalApp.CollapsingToolbarImage" parent="">
         <item name="android:layout_marginTop">48dp</item>
         <item name="android:layout_marginLeft">-124dp</item>
         <item name="android:adjustViewBounds">true</item>
     </style>
 
-    <style name="Widget.Shrine.CollapsingToolbarContent" parent="">
+    <style name="Widget.MedicalApp.CollapsingToolbarContent" parent="">
         <item name="android:layout_marginTop">160dp</item>
         <item name="android:layout_marginLeft">124dp</item>
         <item name="android:layout_marginRight">16dp</item>
@@ -53,19 +97,24 @@
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="TextAppearance.Shrine.Logo" parent="TextAppearance.AppCompat.Display3">
+<!--    <style name="TextAppearance.MedicalApp.Logo" parent="TextAppearance.AppCompat.Display3">-->
+    <style name="TextAppearance.MedicalApp.Logo" parent="TextAppearance.MaterialComponents.Headline3">
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAlignment" tools:ignore="NewApi">center</item>
     </style>
 
-    <style name="ThemeOverlay.Shrine.BottomNavigation" parent="">
+    <style name="ThemeOverlay.MedicalApp.BottomNavigation" parent="">
         <item name="colorPrimary">?attr/colorAccent</item>
     </style>
 
 	<!-- my style -->
-	<style name="ThemeFullScreen" parent="Theme.AppCompat.Light.NoActionBar">
+	<style name="ThemeFullScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="ButtonStyle">
@@ -93,5 +142,9 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MedicalAppActionBarStyle" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:background">@color/bgColorTitle</item>
     </style>
 </resources>

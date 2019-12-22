@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<color name="color_primary">#6200ee</color>
-    <color name="color_primary_variant">#3700b3</color>
-    <color name="color_secondary">#03dac6</color>
-    <color name="color_secondary_variant">#018786</color>
+    <!--LIGHT COLOR THEME-->
+
+    <!--colorPrimary colors map to components and elements, such as app bars and buttons. -->
+    <!--colorSecondary colors are most often used as accents on components, such as FABs and -->
+    <!--selection controls.-->
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#e0e0e0</color>
+    <color name="colorAccent">#009688</color>
+    <color name="textColorPrimary">#dd000000</color>
+    <color name="textColorSecondary">#89000000</color>
+    <color name="bgColorTitle">#5DE4D0</color>
 
     <!--colorBackground appears behind scrollable content and is used for the default window-->
     <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->
@@ -20,9 +27,6 @@
     <color name="color_on_background">#000000</color>
     <color name="color_on_surface">#000000</color>
     <color name="color_on_error">#ffffff</color>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
 
     <!-- dots inactive colors -->
     <color name="dot_inactive">#807D7D7D</color>

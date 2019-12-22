@@ -1,4 +1,4 @@
-package com.android.hoangduy.medical.ui;
+package com.android.hoangduy.medical.views;
 
 import android.view.View;
 

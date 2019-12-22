@@ -21,7 +21,7 @@ import com.android.hoangduy.medical.R;
 import com.android.hoangduy.medical.base.BaseFragment;
 import com.android.hoangduy.medical.model.entity.Symptom;
 import com.android.hoangduy.medical.model.entity.SymptomTracking;
-import com.android.hoangduy.medical.ui.UIHelper;
+import com.android.hoangduy.medical.views.UIHelper;
 import com.android.hoangduy.medical.utils.DateUtil;
 import com.android.hoangduy.medical.viewmodel.AddSymptomViewModel;
 import com.google.android.material.textfield.TextInputEditText;
@@ -139,7 +139,7 @@ public class AddSymptomsFrgmt extends BaseFragment implements View.OnClickListen
                         new SymptomTracking(
                                 symptom.getId(),
                                 level,
-                                DateUtil.getCurrentDate().getTime()
+                                new Date().getTime()
                         )
                 );
             }

@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 
 import com.android.hoangduy.medical.R;
 import com.android.hoangduy.medical.base.BaseFragment;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class MainFrgmt extends BaseFragment implements View.OnClickListener {
     public static MainFrgmt newInstance() {
@@ -73,7 +73,7 @@ public class MainFrgmt extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected boolean onBackPressed() {
-        new AlertDialog.Builder(getContext())
+        new MaterialAlertDialogBuilder(getContext())
                 .setMessage(getString(R.string.exit_app_msg))
                 .setPositiveButton(getString(R.string.yes), (dialog, which) -> getActivity().finish())
                 .setNegativeButton(getString(R.string.no), null)

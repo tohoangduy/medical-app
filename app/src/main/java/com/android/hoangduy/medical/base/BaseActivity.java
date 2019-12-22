@@ -27,11 +27,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getContentViewId());
 
         Fragment fragment = getFirstFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(getFragmentContainerId(), fragment, fragment.getClass().getSimpleName())
-                .addToBackStack(fragment.getClass().getSimpleName())
-                .commit();
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(getFragmentContainerId(), fragment, fragment.getClass().getSimpleName())
+                    .addToBackStack(fragment.getClass().getSimpleName())
+                    .commit();
+        }
 
         initToolbar();
     }
@@ -84,6 +86,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             super.onBackPressed();
+        } else {
+            finish();
         }
     }
 

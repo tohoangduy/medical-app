@@ -26,8 +26,8 @@ import com.android.hoangduy.medical.R;
 import com.android.hoangduy.medical.activity.MainActivity;
 import com.android.hoangduy.medical.adapter.SlideShowAdapter;
 import com.android.hoangduy.medical.base.BaseFragment;
-import com.android.hoangduy.medical.ui.DepthPageTransformer;
-import com.android.hoangduy.medical.ui.ZoomInViewTransformer;
+import com.android.hoangduy.medical.views.DepthPageTransformer;
+import com.android.hoangduy.medical.views.ZoomInViewTransformer;
 import com.android.hoangduy.medical.utils.Const;
 import com.android.hoangduy.medical.utils.SharePref;
 

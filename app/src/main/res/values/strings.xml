@@ -19,4 +19,21 @@
     <string name="yes">YES</string>
     <string name="no">NO</string>
     <string name="add_prescribed_medication">Add Prescribed Medication</string>
+    <string name="low_storage_error">Ocr dependencies cannot be downloaded due to low device storage</string>
+    <string name="ok">OK</string>
+    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
+    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
+    <string name="ocr_failure">No text captured</string>
+    <string name="ocr_error">"Error reading text: %1$s"</string>
+    <string name="cancel">Cancel</string>
+    <string name="select">Select</string>
+    <string name="which_medication_name_of_you_bellow">Which medication name of you bellow?</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="save">Save</string>
+    <string name="error_msg_permission_write_external">Please grant permission write to external storage!</string>
+    <string name="allow">Allow</string>
+    <string name="error">Error</string>
+    <string name="you_need_to_grant_permission">You need to grant permission</string>
+    <string name="grant">Grant</string>
 </resources>

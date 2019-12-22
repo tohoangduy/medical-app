@@ -4,17 +4,17 @@
     package="com.android.hoangduy.medical">
 
     <application
-        android:name="com.android.hoangduy.medical.MedicationApplication"
+        android:name=".MedicationApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_transform"
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_transform"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Shrine"
+        android:theme="@style/Theme.MedicalApp"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name="com.android.hoangduy.medical.activity.MainActivity"
-            android:theme="@style/Theme.Shrine">
+            android:name=".activity.MainActivity"
+            android:theme="@style/Theme.MedicalApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,9 +23,23 @@
         </activity>
 
         <activity
-            android:name="com.android.hoangduy.medical.activity.IntroActivity"
+            android:name=".activity.IntroActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeFullScreen" />
+        <activity
+            android:name=".activity.OcrCaptureActivity"
+            android:theme="@style/ThemeFullScreen" />
+
+        <activity
+            android:name=".activity.CaptureActivity"
+            android:theme="@style/ThemeFullScreen" />
     </application>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 </manifest>
