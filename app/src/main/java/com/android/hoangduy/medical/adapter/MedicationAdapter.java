@@ -2,35 +2,47 @@ package com.android.hoangduy.medical.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.provider.MediaStore;
+import android.media.Image;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.hoangduy.medical.R;
 import com.android.hoangduy.medical.listeners.ICallback;
 import com.android.hoangduy.medical.model.dto.MedicationDTO;
+import com.android.hoangduy.medical.utils.FileUtil;
 import com.android.hoangduy.medical.views.SpinnerButtons;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputEditText;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.MedicationVH> {
 
     private List<MedicationDTO> mDataset;
     private Activity context;
+    private Fragment fragment;
     private ICallback callback;
 
-    public MedicationAdapter(Activity context, List<MedicationDTO> dataset) {
+    public MedicationAdapter(Activity context, List<MedicationDTO> dataset, Fragment fragment) {
         this.context = context;
         this.mDataset = dataset;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -58,6 +70,19 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
 
     public void setCallBack(ICallback cb) {
         callback = cb;
+    }
+
+    public void onCropImageResult(Uri uriImage) {
+        InputStream iStream = null;
+        try {
+            iStream = context.getContentResolver().openInputStream(uriImage);
+            mDataset.get(0).image = FileUtil.getBytes(iStream);
+            notifyDataSetChanged();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     protected class MedicationVH extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -124,12 +149,15 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
                     rcTime.getAdapter().notifyItemInserted(datasetTime.size());
                     break;
                 case R.id.imgMedication:
-//                    Intent captureIntent = new Intent(context, CaptureActivity.class);
-//                    context.startActivityForResult(captureIntent, CameraUtils.CAMERA_REQUEST);
+                    Uri uri = new Intent().getData();
+                    CropImage.activity(uri)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .setAspectRatio(1, 1)
+                            .start(context, fragment);
 
-                    Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    context.startActivityForResult(camera, 1221);
-                break;
+//                    Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    context.startActivityForResult(camera, 1221);
+                    break;
                 case R.id.minimizeContainer:
                     break;
             }

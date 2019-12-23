@@ -1,6 +1,7 @@
 package com.android.hoangduy.medical.base;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -36,6 +37,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         initToolbar();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     protected void initToolbar() {

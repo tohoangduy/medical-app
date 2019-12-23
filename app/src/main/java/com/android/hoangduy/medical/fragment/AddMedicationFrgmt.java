@@ -1,8 +1,12 @@
 package com.android.hoangduy.medical.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.hoangduy.medical.R;
@@ -22,10 +27,13 @@ import com.android.hoangduy.medical.base.BaseFragment;
 import com.android.hoangduy.medical.listeners.ICallback;
 import com.android.hoangduy.medical.model.dto.MedicationDTO;
 import com.android.hoangduy.medical.utils.DateUtil;
+import com.android.hoangduy.medical.utils.PermissionUtil;
+import com.android.hoangduy.medical.views.UIHelper;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,8 +42,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class AddMedicationFrgmt extends BaseFragment
-        implements View.OnClickListener, ICallback
-{
+        implements View.OnClickListener, ICallback, ActivityCompat.RequestPermissionsRequestCodeValidator {
 
     private static final int RC_OCR_CAPTURE = 9003;
 
@@ -76,7 +83,7 @@ public class AddMedicationFrgmt extends BaseFragment
                 .setOnSelectedDate(date -> edDateVisited.setText(date))
                 .setMaxDate(new Date().getTime());
 
-        medicationAdapter = new MedicationAdapter(getActivity(), datasetMedicationDto);
+        medicationAdapter = new MedicationAdapter(getActivity(), datasetMedicationDto, this);
         medicationAdapter.setCallBack(this);
         rcMedication.setAdapter(medicationAdapter);
     }
@@ -85,6 +92,13 @@ public class AddMedicationFrgmt extends BaseFragment
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnAddMedication:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (!PermissionUtil.isPermissionGranted(getContext(), Manifest.permission.CAMERA)) {
+                        PermissionUtil.requestPermission(getActivity(), new String[]{Manifest.permission.CAMERA});
+                        break;
+                    }
+                }
+
                 openCameraIntent();
                 btnAddMedication.setVisibility(View.GONE);
                 break;
@@ -98,6 +112,40 @@ public class AddMedicationFrgmt extends BaseFragment
                                 "dpStart"
                         );
                 break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PermissionUtil.PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+                    openCameraIntent();
+                    btnAddMedication.setVisibility(View.GONE);
+                } else {
+                    // Permission Denied
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (PermissionUtil.isPermissionGranted(getContext(), Manifest.permission.CAMERA)) {
+                            UIHelper.showMessageOKCancel(
+                                    getContext(),
+                                    getString(R.string.you_need_to_allow_access_permission),
+                                    (DialogInterface dialog, int which) -> {
+                                        PermissionUtil.requestPermission(getActivity(), new String[]{Manifest.permission.CAMERA});
+                                    }
+                            );
+                        }
+                    }
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void validateRequestPermissionsRequestCode(int requestCode) {
+        if (requestCode == PermissionUtil.PERMISSION_REQUEST_CODE) {
+            openCameraIntent();
+            btnAddMedication.setVisibility(View.GONE);
         }
     }
 
@@ -151,10 +199,14 @@ public class AddMedicationFrgmt extends BaseFragment
                 )
                         .show();
             }
-        } else if (requestCode == CaptureActivity.REQUEST_CODE) {
+        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) { // take picture frm MedicationAdapter
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == Activity.RESULT_OK) {
-//                data.getByteArrayExtra(CaptureActivity.class.getSimpleName());
-//                medicationAdapter.
+                Uri resultUri = result.getUri();
+                medicationAdapter.onCropImageResult(resultUri);
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                UIHelper.showMessageOK(getContext(), getString(R.string.error), error.getMessage(), null);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -182,5 +234,9 @@ public class AddMedicationFrgmt extends BaseFragment
     @Override
     public void onSaved() {
         btnAddMedication.setVisibility(View.VISIBLE);
+    }
+
+    public interface CameraIntent {
+        void openCamera();
     }
 }
