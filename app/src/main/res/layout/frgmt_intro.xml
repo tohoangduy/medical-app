@@ -13,6 +13,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/img_pager"
+        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

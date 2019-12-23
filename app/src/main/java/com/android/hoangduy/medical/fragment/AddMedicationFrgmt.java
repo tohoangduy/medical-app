@@ -17,17 +17,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.hoangduy.medical.MedicationApplication;
 import com.android.hoangduy.medical.R;
-import com.android.hoangduy.medical.activity.CaptureActivity;
 import com.android.hoangduy.medical.activity.OcrCaptureActivity;
 import com.android.hoangduy.medical.adapter.MedicationAdapter;
 import com.android.hoangduy.medical.base.BaseFragment;
 import com.android.hoangduy.medical.listeners.ICallback;
 import com.android.hoangduy.medical.model.dto.MedicationDTO;
+import com.android.hoangduy.medical.model.entity.Medication;
 import com.android.hoangduy.medical.utils.DateUtil;
 import com.android.hoangduy.medical.utils.PermissionUtil;
+import com.android.hoangduy.medical.viewmodel.AddMedicationViewModel;
 import com.android.hoangduy.medical.views.UIHelper;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -52,6 +55,7 @@ public class AddMedicationFrgmt extends BaseFragment
     private List<MedicationDTO> datasetMedicationDto = new ArrayList<>();
     private MedicationAdapter medicationAdapter;
     private FloatingActionButton btnAddMedication;
+    private AddMedicationViewModel viewModel;
 
     public static AddMedicationFrgmt newInstance() {
         return new AddMedicationFrgmt();
@@ -63,6 +67,10 @@ public class AddMedicationFrgmt extends BaseFragment
         if (contentView != null) return contentView;
         contentView = inflater.inflate(R.layout.frgmt_add_medication, container, false);
         setTitle(getString(R.string.add_prescribed_medication));
+
+        ((MedicationApplication) getActivity().getApplication())
+                .getApplicationComponent()
+                .inject(this);
 
         // get references
         btnAddMedication = contentView.findViewById(R.id.btnAddMedication);
@@ -76,6 +84,38 @@ public class AddMedicationFrgmt extends BaseFragment
         init();
 
         return contentView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        //Set up and subscribe (observe) to the ViewModel
+        viewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(AddMedicationViewModel.class);
+
+        loadMedications();
+    }
+
+    private void loadMedications() {
+        UIHelper.showLoadingDialog(getContext());
+        viewModel.loadMedications().observe(this, (List<Medication> medications) -> {
+            if (medications != null) {
+                datasetMedicationDto.clear();
+                for (Medication m : medications) {
+                    MedicationDTO medicationDTO = new MedicationDTO();
+                    medicationDTO.date = m.getDate();
+                    medicationDTO.takeTimeList = Arrays.asList(m.getTakeTime().split(";"));
+                    medicationDTO.isBeforeMeal = m.isBeforeMeal();
+                    medicationDTO.quantity = m.getQuantity();
+                    medicationDTO.name = m.getName();
+                    medicationDTO.image = m.getImage();
+                    datasetMedicationDto.add(medicationDTO);
+                }
+                medicationAdapter.notifyDataSetChanged();
+                UIHelper.hideLoadingDialog();
+            }
+        });
     }
 
     private void init() {
@@ -100,7 +140,6 @@ public class AddMedicationFrgmt extends BaseFragment
                 }
 
                 openCameraIntent();
-                btnAddMedication.setVisibility(View.GONE);
                 break;
 
             case R.id.edDateVisited:
@@ -145,7 +184,6 @@ public class AddMedicationFrgmt extends BaseFragment
     public void validateRequestPermissionsRequestCode(int requestCode) {
         if (requestCode == PermissionUtil.PERMISSION_REQUEST_CODE) {
             openCameraIntent();
-            btnAddMedication.setVisibility(View.GONE);
         }
     }
 
@@ -173,6 +211,7 @@ public class AddMedicationFrgmt extends BaseFragment
                                             drugName = drugName.concat(" " + drugNameArr[i].trim());
                                         }
                                     }
+                                    btnAddMedication.setVisibility(View.GONE);
                                     showAddMedicationForm(drugName);
                                 }
                             })
@@ -196,8 +235,7 @@ public class AddMedicationFrgmt extends BaseFragment
                                 CommonStatusCodes.getStatusCodeString(resultCode)
                         ),
                         Toast.LENGTH_LONG
-                )
-                        .show();
+                ).show();
             }
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) { // take picture frm MedicationAdapter
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
@@ -215,6 +253,7 @@ public class AddMedicationFrgmt extends BaseFragment
 
     private void showAddMedicationForm(String drugName) {
         MedicationDTO medicationDTO = new MedicationDTO();
+        medicationDTO.date = edDateVisited.getText().toString();
         medicationDTO.name = drugName;
         medicationDTO.isBeforeMeal = false;
         medicationDTO.quantity = 1;
@@ -232,8 +271,13 @@ public class AddMedicationFrgmt extends BaseFragment
     }
 
     @Override
-    public void onSaved() {
+    public void onSaved(int index) {
         btnAddMedication.setVisibility(View.VISIBLE);
+        MedicationDTO medicationDTO = datasetMedicationDto.get(index);
+        if (medicationDTO.date == null || medicationDTO.date.isEmpty()) {
+            medicationDTO.date = DateUtil.getTodayString();
+        }
+        viewModel.addMedication(medicationDTO);
     }
 
     public interface CameraIntent {

@@ -6,12 +6,12 @@
     android:layout_height="wrap_content"
     card_view:cardPreventCornerOverlap="false"
     card_view:cardBackgroundColor="@android:color/transparent"
-    card_view:cardCornerRadius="10dp"
-    card_view:cardElevation="5dp"
+    card_view:cardCornerRadius="0dp"
+    card_view:cardElevation="2dp"
     card_view:cardUseCompatPadding="false">
     <ImageView
         android:id="@+id/imgSlide"
-        android:scaleType="fitCenter"
+        android:scaleType="centerInside"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"

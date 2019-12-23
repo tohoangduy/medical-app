@@ -1,5 +1,6 @@
 package com.android.hoangduy.medical.views;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.inputmethod.InputMethodManager;
@@ -34,5 +35,20 @@ public class UIHelper {
                 .setMessage(message)
                 .setPositiveButton(R.string.ok, okListener)
                 .show();
+    }
+
+    private static ProgressDialog loadingDialog;
+    public static void showLoadingDialog(Context context) {
+        if (loadingDialog == null)
+            loadingDialog = ProgressDialog.show(context, "", "Loading ...", true);
+        else
+            loadingDialog.show();
+    }
+
+    public static void hideLoadingDialog() {
+        if (loadingDialog != null) {
+            loadingDialog.dismiss();
+            loadingDialog = null;
+        }
     }
 }

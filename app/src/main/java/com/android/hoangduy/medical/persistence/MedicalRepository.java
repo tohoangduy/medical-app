@@ -29,6 +29,10 @@ public class MedicalRepository {
         this.symptomTrackingDao = symptomTrackingDao;
     }
 
+    public LiveData<List<Medication>> getListMedications(String date) {
+        return medicationDao.getListMedications(date);
+    }
+
     public LiveData<List<Medication>> getListMedications() {
         return medicationDao.getListMedications();
     }
@@ -78,5 +82,9 @@ public class MedicalRepository {
 
     public void deleteSymptomTracking(SymptomTracking symptomTracking) {
         symptomTrackingDao.deleteSymptomTracking(symptomTracking);
+    }
+
+    public Long insertMedication(Medication medication) {
+        return medicationDao.insertMedication(medication);
     }
 }

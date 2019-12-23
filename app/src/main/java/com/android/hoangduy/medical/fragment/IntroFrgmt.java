@@ -84,9 +84,9 @@ public class IntroFrgmt extends BaseFragment
         changeStatusBarColor();
 
         List<Integer> datasetSlideShow = new ArrayList<>();
-        datasetSlideShow.add(R.drawable.slide1);
-        datasetSlideShow.add(R.drawable.slide2);
-        datasetSlideShow.add(R.drawable.slide3);
+        datasetSlideShow.add(R.drawable.img_intro1);
+        datasetSlideShow.add(R.drawable.img_intro2);
+        datasetSlideShow.add(R.drawable.img_intro3);
         SlideShowAdapter slideShowAdapter = new SlideShowAdapter(getContext(), datasetSlideShow);
         imgPager.setAdapter(slideShowAdapter);
 

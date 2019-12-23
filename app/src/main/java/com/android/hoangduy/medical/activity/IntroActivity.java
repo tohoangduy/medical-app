@@ -14,7 +14,7 @@ public class IntroActivity extends BaseActivity {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_layout;
+        return R.layout.empty_layout;
     }
 
     @Override

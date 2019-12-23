@@ -13,11 +13,14 @@ import java.util.List;
 @Dao
 public interface MedicationDao {
 
+    @Query("SELECT * FROM Medication WHERE date = :date")
+    LiveData<List<Medication>> getListMedications(String date);
+
     @Query("SELECT * FROM Medication")
     LiveData<List<Medication>> getListMedications();
 
     @Insert
-    void insertMedication(Medication symptom);
+    Long insertMedication(Medication medication);
 
     @Query("SELECT * FROM Medication where id = :id")
     LiveData<Medication> getMedicationById(long id);

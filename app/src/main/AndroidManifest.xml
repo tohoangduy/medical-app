@@ -25,7 +25,7 @@
         <activity
             android:name=".activity.IntroActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeFullScreen" />
+            android:theme="@style/Theme.MedicalApp" />
         <activity
             android:name=".activity.OcrCaptureActivity"
             android:theme="@style/ThemeFullScreen" />

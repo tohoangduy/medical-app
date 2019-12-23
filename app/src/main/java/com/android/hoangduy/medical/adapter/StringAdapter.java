@@ -26,6 +26,11 @@ public class StringAdapter extends RecyclerView.Adapter<StringAdapter.VH> {
         this.dataset = dataset;
     }
 
+    private void setValue(int index, String value) {
+        dataset.set(index, value);
+        notifyItemChanged(index);
+    }
+
     @NonNull
     @Override
     public StringAdapter.VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -36,6 +41,7 @@ public class StringAdapter extends RecyclerView.Adapter<StringAdapter.VH> {
 
     @Override
     public void onBindViewHolder(@NonNull StringAdapter.VH holder, int position) {
+        holder.setIndex(position);
         holder.setTime(dataset.get(position));
     }
 
@@ -46,6 +52,7 @@ public class StringAdapter extends RecyclerView.Adapter<StringAdapter.VH> {
 
     public class VH extends RecyclerView.ViewHolder {
 
+        private int index;
         private Button timeView;
 
         public VH(@NonNull View itemView) {
@@ -70,7 +77,7 @@ public class StringAdapter extends RecyclerView.Adapter<StringAdapter.VH> {
                     new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                            timeView.setText(hourOfDay + ":" + minute);
+                            setValue(index, hourOfDay + ":" + minute);
                         }
                     }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -78,6 +85,14 @@ public class StringAdapter extends RecyclerView.Adapter<StringAdapter.VH> {
 
         public void setTime(String time) {
             timeView.setText(time);
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
+
+        public int getIndex() {
+            return index;
         }
     }
 }

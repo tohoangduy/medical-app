@@ -11,10 +11,9 @@ public class Medicament {
     @NonNull
     private long id;
     private String name;
-    private String image;
+    private byte[] image;
 
-    public Medicament(long id, String name, String image) {
-        this.id = id;
+    public Medicament(String name, byte[] image) {
         this.name = name;
         this.image = image;
     }
@@ -35,11 +34,11 @@ public class Medicament {
         this.name = name;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 }

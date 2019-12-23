@@ -64,7 +64,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void setDisplayHomeAsUpEnabled(boolean isDisplay) {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(isDisplay);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(isDisplay);
     }
 
     public void goNext(Fragment fragment) {

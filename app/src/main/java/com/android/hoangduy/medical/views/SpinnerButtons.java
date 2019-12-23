@@ -25,6 +25,7 @@ public class SpinnerButtons extends LinearLayout implements View.OnClickListener
 
     private static final String NAMESPACE = "http://schemas.android.com/apk/res/android";
     private TextView tvValue;
+    private OnValueChange listener;
     private int mValue = 0,
             minValue = Integer.MIN_VALUE,
             maxValue = Integer.MAX_VALUE;
@@ -96,11 +97,17 @@ public class SpinnerButtons extends LinearLayout implements View.OnClickListener
                 if (mValue - 1 > minValue) {
                     tvValue.setText(String.valueOf(--mValue));
                 }
+                if (listener != null) {
+                    listener.onChange(getId(), mValue);
+                }
                 break;
 
             case R.id.btnPlus:
                 if (mValue + 1 < maxValue) {
                     tvValue.setText(String.valueOf(++mValue));
+                }
+                if (listener != null) {
+                    listener.onChange(getId(), mValue);
                 }
                 break;
         }
@@ -121,5 +128,13 @@ public class SpinnerButtons extends LinearLayout implements View.OnClickListener
 
     public void setMaxValue(int maxValue) {
         this.maxValue = maxValue;
+    }
+
+    public void setOnValueChangeListener(OnValueChange listener) {
+        this.listener = listener;
+    }
+
+    public interface OnValueChange {
+        public void onChange(int id, int value);
     }
 }

@@ -2,8 +2,9 @@ package com.android.hoangduy.medical.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,6 +37,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
     private Activity context;
     private Fragment fragment;
     private ICallback callback;
+    private int takePictureIndex = 0;
 
     public MedicationAdapter(Activity context, List<MedicationDTO> dataset, Fragment fragment) {
         this.context = context;
@@ -56,11 +56,14 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
     @Override
     public void onBindViewHolder(@NonNull MedicationAdapter.MedicationVH holder, int position) {
         holder.setMediactionName(mDataset.get(position).name);
-        holder.setMedicationImage(mDataset.get(position).image);
+        if (mDataset.get(position).image != null) {
+            holder.setMedicationImage(mDataset.get(position).image);
+        }
         holder.setQuanity(mDataset.get(position).quantity);
         holder.setTimesPerDay(mDataset.get(position).takeTimeList.size());
         holder.setTakeMedication(mDataset.get(position).isBeforeMeal);
         holder.setTimeList(mDataset.get(position).takeTimeList);
+        holder.setIndex(position);
     }
 
     @Override
@@ -76,8 +79,8 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         InputStream iStream = null;
         try {
             iStream = context.getContentResolver().openInputStream(uriImage);
-            mDataset.get(0).image = FileUtil.getBytes(iStream);
-            notifyDataSetChanged();
+            mDataset.get(takePictureIndex).image = FileUtil.getBytes(iStream);
+            notifyItemChanged(takePictureIndex);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -85,54 +88,81 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         }
     }
 
-    protected class MedicationVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+    protected class MedicationVH extends RecyclerView.ViewHolder implements View.OnClickListener, SpinnerButtons.OnValueChange, MaterialButtonToggleGroup.OnButtonCheckedListener {
 
-        private View mView;
         private List<String> datasetTime;
         private RecyclerView rcTime;
         private TextInputEditText edMedicationName;
+        private AppCompatImageView imgMedication;
+        private View detailPanel;
+        private int index;
+        private SpinnerButtons spinerFrequence, spinerDose;
+        private MaterialButtonToggleGroup toggleGroup;
 
-        public MedicationVH(View view) {
+        MedicationVH(View view) {
             super(view);
-            mView = view;
 
-            mView.findViewById(R.id.btnSave).setOnClickListener(this);
-            mView.findViewById(R.id.btnAddTime).setOnClickListener(this);
-            mView.findViewById(R.id.imgMedication).setOnClickListener(this);
-            mView.findViewById(R.id.minimizeContainer).setOnClickListener(this);
+            imgMedication = view.findViewById(R.id.imgMedication);
+            detailPanel = view.findViewById(R.id.detailPanel);
+            edMedicationName = view.findViewById(R.id.edMedicationName);
+            imgMedication = view.findViewById(R.id.imgMedication);
+            spinerFrequence = view.findViewById(R.id.spinerFrequence);
+            spinerDose = view.findViewById(R.id.spinerDose);
+            toggleGroup = view.findViewById(R.id.toggleGroup);
+            rcTime = view.findViewById(R.id.rcTime);
+
+            view.findViewById(R.id.btnSave).setOnClickListener(this);
+            view.findViewById(R.id.btnAddTime).setOnClickListener(this);
+            imgMedication.setOnClickListener(this);
+            edMedicationName.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    mDataset.get(index).name = s.toString();
+                }
+            });
+            spinerFrequence.setOnValueChangeListener(this);
+            spinerDose.setOnValueChangeListener(this);
+            toggleGroup.addOnButtonCheckedListener(this);
+
+            detailPanel.setVisibility(View.GONE);
+            edMedicationName.setEnabled(false);
         }
 
-        public void setMediactionName(String name) {
-            edMedicationName = mView.findViewById(R.id.edMedicationName);
+        void setMediactionName(String name) {
             edMedicationName.setText(name);
         }
 
-        public void setMedicationImage(byte[] image) {
-            AppCompatImageView imageView = mView.findViewById(R.id.imgMedication);
+        void setMedicationImage(byte[] image) {
             Glide.with(context)
                     .load(image)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(imageView);
+                    .into(imgMedication);
         }
 
-        public void setQuanity(int quanity) {
-            SpinnerButtons spinerFrequence = mView.findViewById(R.id.spinerFrequence);
+        void setQuanity(int quanity) {
             spinerFrequence.setValue(quanity);
         }
 
-        public void setTimesPerDay(int times) {
-            SpinnerButtons spinerDose = mView.findViewById(R.id.spinerDose);
+        void setTimesPerDay(int times) {
             spinerDose.setValue(times);
         }
 
-        public void setTakeMedication(boolean isBeforeMeal) {
-            MaterialButtonToggleGroup toggleGroup = mView.findViewById(R.id.toggleGroup);
+        void setTakeMedication(boolean isBeforeMeal) {
             toggleGroup.check(isBeforeMeal ? R.id.btnBefore : R.id.btnAfter);
         }
 
-        public void setTimeList(List<String> timeList) {
+        void setTimeList(List<String> timeList) {
             datasetTime = timeList;
-            rcTime = mView.findViewById(R.id.rcTime);
             rcTime.setAdapter(new StringAdapter(context, datasetTime));
         }
 
@@ -140,27 +170,71 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btnSave:
-                    edMedicationName.setFocusable(false);
-                    mView.findViewById(R.id.detailPanel).setVisibility(View.GONE);
-                    callback.onSaved();
+                    edMedicationName.setEnabled(false);
+                    detailPanel.setVisibility(View.GONE);
+                    callback.onSaved(index);
                     break;
                 case R.id.btnAddTime:
-                    datasetTime.add("_ _:_ _");
-                    rcTime.getAdapter().notifyItemInserted(datasetTime.size());
+                    spinerDose.setValue(spinerDose.getValue() + 1);
+                    addTakeTime();
                     break;
                 case R.id.imgMedication:
-                    Uri uri = new Intent().getData();
-                    CropImage.activity(uri)
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .setAspectRatio(1, 1)
-                            .start(context, fragment);
-
-//                    Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    context.startActivityForResult(camera, 1221);
+                    takePictureIndex = this.index;
+                    if (detailPanel.getVisibility() == View.VISIBLE) {
+                        Uri uri = new Intent().getData();
+                        CropImage.activity(uri)
+                                .setGuidelines(CropImageView.Guidelines.ON)
+                                .setAspectRatio(1, 1)
+                                .start(context, fragment);
+                    } else {
+                        detailPanel.setVisibility(View.VISIBLE);
+                        edMedicationName.setEnabled(true);
+                    }
                     break;
-                case R.id.minimizeContainer:
+
+                case R.id.edMedicationName:
                     break;
             }
+        }
+
+        private void addTakeTime() {
+            datasetTime.add("_ _:_ _");
+            rcTime.getAdapter().notifyItemInserted(datasetTime.size());
+        }
+
+        void setIndex(int index) {
+            this.index = index;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        @Override
+        public void onChange(int id, int value) {
+            switch (id) {
+                case R.id.spinerFrequence:
+                    mDataset.get(index).quantity = value;
+                    break;
+
+                case R.id.spinerDose:
+                    if (mDataset.get(index).takeTimeList.size() < value)
+                        addTakeTime();
+                    else
+                        removeTakeTime();
+                    break;
+            }
+        }
+
+        private void removeTakeTime() {
+            int lastIndex = datasetTime.size() - 1;
+            datasetTime.remove(lastIndex);
+            rcTime.getAdapter().notifyItemRemoved(lastIndex);
+        }
+
+        @Override
+        public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+            mDataset.get(index).isBeforeMeal = (checkedId == 0 && isChecked);
         }
     }
 }
