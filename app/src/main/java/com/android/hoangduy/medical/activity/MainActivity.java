@@ -32,10 +32,10 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        boolean isSkipIntro = SharePref.getBoolean(getApplicationContext(), Const.KEY_SKIP_INTRO, false);
-        if (!isSkipIntro) {
+//        boolean isSkipIntro = SharePref.getBoolean(getApplicationContext(), Const.KEY_SKIP_INTRO, false);
+//        if (!isSkipIntro) {
             Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
             startActivity(intent);
-        }
+//        }
     }
 }

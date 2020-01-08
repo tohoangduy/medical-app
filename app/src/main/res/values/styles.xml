@@ -147,4 +147,19 @@
     <style name="MedicalAppActionBarStyle" parent="ThemeOverlay.MaterialComponents.ActionBar">
         <item name="android:background">@color/bgColorTitle</item>
     </style>
+
+    <style name="SlideImageActive">
+        <item name="android:translationZ" tools:ignore="NewApi">4dp</item>
+        <item name="android:elevation" tools:ignore="NewApi">4dp</item>
+        <item name="android:scaleX">1</item>
+        <item name="android:scaleY">1</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+    <style name="SlideImageInActive">
+        <item name="android:translationZ" tools:ignore="NewApi">1dp</item>
+        <item name="android:elevation" tools:ignore="NewApi">4dp</item>
+        <item name="android:scaleX">0.7</item>
+        <item name="android:scaleY">0.7</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
 </resources>

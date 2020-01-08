@@ -80,7 +80,8 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         try {
             iStream = context.getContentResolver().openInputStream(uriImage);
             mDataset.get(takePictureIndex).image = FileUtil.getBytes(iStream);
-            notifyItemChanged(takePictureIndex);
+            notifyDataSetChanged();
+//            notifyItemChanged(takePictureIndex);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -88,7 +89,10 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         }
     }
 
-    protected class MedicationVH extends RecyclerView.ViewHolder implements View.OnClickListener, SpinnerButtons.OnValueChange, MaterialButtonToggleGroup.OnButtonCheckedListener {
+    protected class MedicationVH extends RecyclerView.ViewHolder implements
+            View.OnClickListener,
+            SpinnerButtons.OnValueChange,
+            MaterialButtonToggleGroup.OnButtonCheckedListener {
 
         private List<String> datasetTime;
         private RecyclerView rcTime;
@@ -234,7 +238,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
 
         @Override
         public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
-            mDataset.get(index).isBeforeMeal = (checkedId == 0 && isChecked);
+            mDataset.get(index).isBeforeMeal = (checkedId == R.id.btnBefore && isChecked);
         }
     }
 }

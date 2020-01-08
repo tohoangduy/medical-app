@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:motion="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetStart="@+id/start"
+        motion:constraintSetEnd="@+id/middle"
+        motion:duration="1000">
+
+        <OnSwipe
+            motion:touchAnchorId="@id/image1"
+            motion:touchAnchorSide="left"
+            motion:dragDirection="dragLeft"/>
+
+    </Transition>
+
+    <Transition
+        motion:constraintSetStart="@+id/middle"
+        motion:constraintSetEnd="@+id/end"
+        motion:duration="1000">
+
+        <OnSwipe
+            motion:touchAnchorId="@id/image2"
+            motion:touchAnchorSide="left"
+            motion:dragDirection="dragLeft"/>
+
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@id/image1"
+            android:layout_width="@dimen/slide_image_width"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintLeft_toLeftOf="parent"
+            motion:layout_constraintRight_toRightOf="parent"
+            android:layout_margin="@dimen/layout_image_margin"
+            style="@style/SlideImageActive"
+            app:srcCompat="@drawable/bg_intro1"
+            android:adjustViewBounds="true"/>
+        <Constraint
+            android:id="@id/image2"
+            android:layout_width="@dimen/slide_image_width"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintLeft_toRightOf="@id/image1"
+            android:layout_margin="@dimen/layout_image_margin"
+            style="@style/SlideImageInActive"
+            app:srcCompat="@drawable/bg_intro2"
+            android:adjustViewBounds="true"/>
+        <Constraint
+            android:id="@id/image3"
+            android:layout_width="@dimen/slide_image_width"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintLeft_toRightOf="@id/image2"
+            android:layout_margin="@dimen/layout_image_margin"
+            style="@style/SlideImageInActive"
+            app:srcCompat="@drawable/bg_intro3"
+            android:adjustViewBounds="true"/>
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/middle">
+        <Constraint
+            android:id="@id/image1"
+            android:layout_width="@dimen/slide_image_width"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintRight_toLeftOf="@id/image2"
+            android:layout_margin="@dimen/layout_image_margin"
+            style="@style/SlideImageInActive"
+            app:srcCompat="@drawable/bg_intro1"
+            android:adjustViewBounds="true"/>
+
+        <Constraint
+            android:id="@id/image2"
+            android:layout_width="@dimen/slide_image_width"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintLeft_toLeftOf="parent"
+            motion:layout_constraintRight_toRightOf="parent"
+            android:layout_margin="@dimen/layout_image_margin"
+            style="@style/SlideImageActive"
+            app:srcCompat="@drawable/bg_intro1"
+            android:adjustViewBounds="true"/>
+
+        <Constraint
+            android:id="@id/image3"
+            android:layout_width="@dimen/slide_image_width"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintLeft_toRightOf="@id/image2"
+            android:layout_margin="@dimen/layout_image_margin"
+            style="@style/SlideImageInActive"
+            android:adjustViewBounds="true"/>
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@id/image1"
+            android:layout_width="@dimen/slide_image_width"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintRight_toLeftOf="@id/image2"
+            android:layout_margin="@dimen/layout_image_margin"
+            style="@style/SlideImageInActive"
+            app:srcCompat="@drawable/bg_intro1"
+            android:adjustViewBounds="true"/>
+        <Constraint
+            android:id="@id/image2"
+            android:layout_width="@dimen/slide_image_width"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintRight_toLeftOf="@id/image3"
+            android:layout_margin="@dimen/layout_image_margin"
+            style="@style/SlideImageInActive"
+            app:srcCompat="@drawable/bg_intro2"
+            android:adjustViewBounds="true"/>
+        <Constraint
+            android:id="@id/image3"
+            android:layout_width="@dimen/slide_image_width"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintLeft_toLeftOf="parent"
+            motion:layout_constraintRight_toRightOf="parent"
+            android:layout_margin="@dimen/layout_image_margin"
+            style="@style/SlideImageActive"
+            app:srcCompat="@drawable/bg_intro3"
+            android:adjustViewBounds="true"/>
+    </ConstraintSet>
+
+</MotionScene>

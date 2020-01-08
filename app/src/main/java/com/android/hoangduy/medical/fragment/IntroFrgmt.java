@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -27,9 +26,9 @@ import com.android.hoangduy.medical.activity.MainActivity;
 import com.android.hoangduy.medical.adapter.SlideShowAdapter;
 import com.android.hoangduy.medical.base.BaseFragment;
 import com.android.hoangduy.medical.views.DepthPageTransformer;
-import com.android.hoangduy.medical.views.ZoomInViewTransformer;
 import com.android.hoangduy.medical.utils.Const;
 import com.android.hoangduy.medical.utils.SharePref;
+import com.android.hoangduy.medical.views.ViewpagerMotion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class IntroFrgmt extends BaseFragment
         implements View.OnClickListener {
 
     private ViewPager contentPager;
-    private RecyclerView imgPager;
+    private ViewpagerMotion motionLayout;
     private LinearLayout dotsLayout;
     private int[] layouts;
     private Button btnGetStarted;
@@ -56,11 +55,11 @@ public class IntroFrgmt extends BaseFragment
         contentView = inflater.inflate(R.layout.frgmt_intro, container, false);
 
         contentPager = contentView.findViewById(R.id.content_pager);
-        imgPager = contentView.findViewById(R.id.img_pager);
+        motionLayout = contentView.findViewById(R.id.viewPagerMotion);
         dotsLayout = contentView.findViewById(R.id.layoutDots);
         tvSkip = contentView.findViewById(R.id.tvSkip);
         btnGetStarted = contentView.findViewById(R.id.btnGetStarted);
-        imgPager.setLayoutManager(new ZoomInViewTransformer(getContext(), LinearLayoutManager.HORIZONTAL, false));
+//        motionLayout.setLayoutManager(new ZoomInViewTransformer(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
 //        UIHelper.setTextUnderLine(tvSkip, getString(R.string.skip));
 
@@ -87,12 +86,12 @@ public class IntroFrgmt extends BaseFragment
         datasetSlideShow.add(R.drawable.img_intro1);
         datasetSlideShow.add(R.drawable.img_intro2);
         datasetSlideShow.add(R.drawable.img_intro3);
-        SlideShowAdapter slideShowAdapter = new SlideShowAdapter(getContext(), datasetSlideShow);
-        imgPager.setAdapter(slideShowAdapter);
+//        SlideShowAdapter slideShowAdapter = new SlideShowAdapter(getContext(), datasetSlideShow);
+//        motionLayout.setAdapter(slideShowAdapter);
 
-        MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter(layouts);
-        contentPager.setAdapter(myViewPagerAdapter);
-        contentPager.addOnPageChangeListener(viewPagerPageChangeListener);
+        IntroViewPagerAdapter introViewPagerAdapter = new IntroViewPagerAdapter(layouts);
+        contentPager.setAdapter(introViewPagerAdapter);
+        contentPager.addOnPageChangeListener(motionLayout);
 
         btnGetStarted.setOnClickListener(this);
         tvSkip.setOnClickListener(this);
@@ -182,11 +181,11 @@ public class IntroFrgmt extends BaseFragment
     /**
      * View pager adapter
      */
-    public class MyViewPagerAdapter extends PagerAdapter {
+    public class IntroViewPagerAdapter extends PagerAdapter {
 
         private int[] contains;
 
-        MyViewPagerAdapter(int[] contains) {
+        IntroViewPagerAdapter(int[] contains) {
             this.contains = contains;
         }
 
